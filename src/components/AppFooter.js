@@ -1,7 +1,7 @@
-import React from 'react'
-import { CFooter } from '@coreui/react'
+import React from "react";
+import { CFooter } from "@coreui/react";
 
-const AppFooter = () => {
+function AppFooter() {
   return (
     <CFooter className="px-4">
       <div className="ms-auto">
@@ -10,7 +10,7 @@ const AppFooter = () => {
         </div>
       </div>
     </CFooter>
-  )
+  );
 }
 
-export default React.memo(AppFooter)
+export default React.memo(AppFooter);

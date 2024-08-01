@@ -11,13 +11,13 @@ import {
 import CIcon from "@coreui/icons-react";
 import { cilCloudDownload } from "@coreui/icons";
 
-import WidgetsDropdown from "../widgets/WidgetsDropdown";
+import Widgets from "./Widgets";
 import MainChart from "./MainChart";
 
-const Dashboard = () => {
+function Dashboard() {
   return (
     <>
-      <WidgetsDropdown className="mb-4" />
+      <Widgets className="mb-4" />
       <CCard className="mb-4">
         <CCardBody>
           <CRow>
@@ -55,6 +55,6 @@ const Dashboard = () => {
       </CRow>
     </>
   );
-};
+}
 
 export default Dashboard;

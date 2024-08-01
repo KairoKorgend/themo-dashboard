@@ -5,9 +5,7 @@ import {
   CCloseButton,
   CSidebar,
   CSidebarBrand,
-  CSidebarFooter,
   CSidebarHeader,
-  CSidebarToggler,
 } from "@coreui/react";
 
 import { AppSidebarNav } from "./AppSidebarNav";
@@ -17,7 +15,7 @@ import logo from "src/assets/brand/themo-logo-white.svg";
 // sidebar nav config
 import navigation from "../_nav";
 
-const AppSidebar = () => {
+function AppSidebar() {
   const dispatch = useDispatch();
   const unfoldable = useSelector((state) => state.sidebarUnfoldable);
   const sidebarShow = useSelector((state) => state.sidebarShow);
@@ -49,15 +47,8 @@ const AppSidebar = () => {
         />
       </CSidebarHeader>
       <AppSidebarNav items={navigation} />
-      <CSidebarFooter className="border-top d-none d-lg-flex">
-        <CSidebarToggler
-          onClick={() =>
-            dispatch({ type: "set", sidebarUnfoldable: !unfoldable })
-          }
-        />
-      </CSidebarFooter>
     </CSidebar>
   );
-};
+}
 
 export default React.memo(AppSidebar);
