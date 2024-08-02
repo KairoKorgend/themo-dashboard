@@ -1,8 +1,8 @@
 import React from "react";
 
-const Dashboard = React.lazy(() => import("./views/dashboard/Dashboard"));
-const Users = React.lazy(() => import("./views/users/Users"));
-const Devices = React.lazy(() => import("./views/devices/Devices"));
+const Dashboard = React.lazy(() => import("./pages/dashboard/Dashboard.jsx"));
+const Users = React.lazy(() => import("./pages/users/Users.jsx"));
+const Devices = React.lazy(() => import("./pages/devices/Devices.jsx"));
 
 const routes = [
   { path: "/", exact: true, name: "Home" },

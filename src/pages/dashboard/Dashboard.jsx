@@ -11,8 +11,8 @@ import {
 import CIcon from "@coreui/icons-react";
 import { cilCloudDownload } from "@coreui/icons";
 
-import Widgets from "./Widgets";
-import MainChart from "./MainChart";
+import Widgets from "../../components/Widgets.jsx";
+import MainChart from "../../components/MainChart.jsx";
 
 function Dashboard() {
   return (

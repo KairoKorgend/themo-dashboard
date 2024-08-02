@@ -8,12 +8,12 @@ import {
   CSidebarHeader,
 } from "@coreui/react";
 
-import { AppSidebarNav } from "./AppSidebarNav";
+import { AppSidebarNav } from "./AppSidebarNav.jsx";
 
 import logo from "src/assets/brand/themo-logo-white.svg";
 
 // sidebar nav config
-import navigation from "../_nav";
+import navigation from "../../_nav";
 
 function AppSidebar() {
   const dispatch = useDispatch();
