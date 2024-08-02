@@ -13,7 +13,12 @@ import { AppSidebarNav } from "./AppSidebarNav.jsx";
 import logo from "src/assets/brand/themo-logo-white.svg";
 
 import CIcon from "@coreui/icons-react";
-import { cilTablet, cilGroup, cilSpeedometer } from "@coreui/icons";
+import {
+  cilTablet,
+  cilGroup,
+  cilSpeedometer,
+  cilSettings,
+} from "@coreui/icons";
 import { CNavItem } from "@coreui/react";
 
 const _nav = [
@@ -34,6 +39,12 @@ const _nav = [
     name: "Users",
     to: "/users",
     icon: <CIcon icon={cilGroup} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: "Settings",
+    to: "/users",
+    icon: <CIcon icon={cilSettings} customClassName="nav-icon" />,
   },
 ];
 
