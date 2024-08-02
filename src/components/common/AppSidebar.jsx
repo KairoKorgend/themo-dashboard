@@ -12,8 +12,30 @@ import { AppSidebarNav } from "./AppSidebarNav.jsx";
 
 import logo from "src/assets/brand/themo-logo-white.svg";
 
-// sidebar nav config
-import navigation from "../../_nav";
+import CIcon from "@coreui/icons-react";
+import { cilTablet, cilGroup, cilSpeedometer } from "@coreui/icons";
+import { CNavItem } from "@coreui/react";
+
+const _nav = [
+  {
+    component: CNavItem,
+    name: "Dashboard",
+    to: "/dashboard",
+    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: "Devices",
+    to: "/devices",
+    icon: <CIcon icon={cilTablet} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: "Users",
+    to: "/users",
+    icon: <CIcon icon={cilGroup} customClassName="nav-icon" />,
+  },
+];
 
 function AppSidebar() {
   const dispatch = useDispatch();
@@ -46,7 +68,7 @@ function AppSidebar() {
           onClick={() => dispatch({ type: "set", sidebarShow: false })}
         />
       </CSidebarHeader>
-      <AppSidebarNav items={navigation} />
+      <AppSidebarNav items={_nav} />
     </CSidebar>
   );
 }
