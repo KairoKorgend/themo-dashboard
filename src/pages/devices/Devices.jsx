@@ -1,74 +1,152 @@
-import * as React from "react";
-import Box from "@mui/system/Box";
+import React, { Suspense, useState } from "react";
+import { DataGrid } from "@mui/x-data-grid";
+import { CContainer, CSpinner, CButton } from "@coreui/react";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-export default function Demo() {
+const initialRows = [
+  {
+    id: 1,
+    deviceName: "Kylpyhuone",
+    info: "/",
+    client: "Jari Siikavirta",
+    deviceType: "FLOOR/_/_",
+    power: "_",
+    timeStamp: "0001-01-01T00:00:00",
+  },
+  {
+    id: 2,
+    deviceName: "Kylpyhuone",
+    info: "/",
+    client: "Jari Siikavirta",
+    deviceType: "FLOOR/_/_",
+    power: "_",
+    timeStamp: "0001-01-01T00:00:00",
+  },
+  {
+    id: 3,
+    deviceName: "Kylpyhuone",
+    info: "/",
+    client: "Jari Siikavirta",
+    deviceType: "FLOOR/_/_",
+    power: "_",
+    timeStamp: "0001-01-01T00:00:00",
+  },
+  {
+    id: 4,
+    deviceName: "Kylpyhuone",
+    info: "/",
+    client: "Jari Siikavirta",
+    deviceType: "FLOOR/_/_",
+    power: "_",
+    timeStamp: "0001-01-01T00:00:00",
+  },
+  {
+    id: 5,
+    deviceName: "Kylpyhuone",
+    info: "/",
+    client: "Jari Siikavirta",
+    deviceType: "FLOOR/_/_",
+    power: "_",
+    timeStamp: "0001-01-01T00:00:00",
+  },
+];
+
+export default function DevicesList() {
+  const [rows, setRows] = useState(initialRows);
+
+  const handleDelete = (id) => {
+    setRows(rows.filter((row) => row.id !== id));
+  };
+
+  const handleEdit = (id) => {
+    // Add your edit logic here
+    console.log(`Edit row with id: ${id}`);
+  };
+
+  const columns = [
+    { field: "id", headerName: "ID", width: 90 },
+    {
+      field: "deviceName",
+      headerName: "Device name",
+      width: 160,
+      editable: false,
+    },
+    {
+      field: "info",
+      headerName: "Info",
+      width: 140,
+      editable: false,
+    },
+    {
+      field: "client",
+      headerName: "Client",
+      width: 160,
+      editable: false,
+    },
+    {
+      field: "deviceType",
+      headerName: "Device type",
+      description: "This column has a value getter and is not sortable.",
+      sortable: false,
+      width: 160,
+    },
+    {
+      field: "power",
+      headerName: "Power",
+      width: 110,
+      editable: false,
+    },
+    {
+      field: "timeStamp",
+      headerName: "Timestamp (UTC)",
+      type: "timeStamp",
+      width: 160,
+      editable: false,
+    },
+    {
+      width: 150,
+      renderCell: (params) => (
+        <CContainer className="px-4" lg>
+          <EditIcon
+            onClick={() => handleEdit(params.id)}
+            style={{
+              cursor: "pointer",
+              color: "green",
+              marginLeft: "20px",
+              marginRight: "8px",
+            }}
+          />
+          <DeleteIcon
+            onClick={() => handleDelete(params.id)}
+            style={{
+              cursor: "pointer",
+              color: "red",
+            }}
+          />
+        </CContainer>
+      ),
+    },
+  ];
+
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: { xs: "column", md: "row" },
-        alignItems: "center",
-        bgcolor: "background.default",
-        border: "1px solid",
-        borderColor: "divider",
-        borderRadius: 2,
-        overflow: "clip",
-      }}
-    >
-      <Box
-        component="img"
-        sx={{
-          height: 233,
-          width: 350,
-          maxHeight: { xs: 233, md: 167 },
-          maxWidth: { xs: 350, md: 250 },
+    <CContainer className="px-4" lg>
+      <Suspense fallback={<CSpinner color="primary" />}></Suspense>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 10,
+            },
+          },
         }}
-        alt="The house from the offer."
-        src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&w=350&dpr=2"
+        pageSizeOptions={[5]}
+        checkboxSelection
+        disableRowSelectionOnClick
       />
-      <Box
-        sx={{
-          p: 3,
-          minWidth: { md: 350 },
-          display: "flex",
-          flexDirection: "column",
-          alignItems: { xs: "center", md: "flex-start" },
-          gap: 0.5,
-        }}
-      >
-        <Box
-          component="span"
-          sx={{ fontSize: "0.875rem", color: "text.secondary" }}
-        >
-          123 Main St, Phoenix AZ
-        </Box>
-        <Box
-          component="span"
-          sx={{ color: "primary.main", fontSize: "1.5rem", fontWeight: "bold" }}
-        >
-          $280,000 — $310,000
-        </Box>
-        <Box
-          sx={{
-            py: 0.5,
-            px: 1,
-            backgroundColor: "rgba(46, 125, 50, 0.1)",
-            borderRadius: 10,
-            display: "flex",
-            alignItems: "center",
-            gap: 0.5,
-            border: "1px solid",
-            borderColor: "rgba(46, 125, 50, 0.1)",
-            fontSize: "0.7rem",
-            fontWeight: "bold",
-            letterSpacing: ".05rem",
-            textTransform: "uppercase",
-            color: "success.main",
-          }}
-        >
-          Confidence score: 85%
-        </Box>
-      </Box>
-    </Box>
+      <Suspense />
+    </CContainer>
   );
 }

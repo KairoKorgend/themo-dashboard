@@ -1,89 +1,152 @@
-import React, { useEffect, useState, createRef } from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames";
-import { CRow, CCol, CCard, CCardHeader, CCardBody } from "@coreui/react";
-import { rgbToHex } from "@coreui/utils";
+import React, { Suspense, useState } from "react";
+import { DataGrid } from "@mui/x-data-grid";
+import { CContainer, CSpinner, CButton } from "@coreui/react";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-function ThemeView() {
-  const [color, setColor] = useState("rgb(255, 255, 255)");
-  const ref = createRef();
+const initialRows = [
+  {
+    id: 1,
+    deviceName: "Kylpyhuone",
+    info: "/",
+    client: "Jari Siikavirta",
+    deviceType: "FLOOR/_/_",
+    power: "_",
+    timeStamp: "0001-01-01T00:00:00",
+  },
+  {
+    id: 2,
+    deviceName: "Kylpyhuone",
+    info: "/",
+    client: "Jari Siikavirta",
+    deviceType: "FLOOR/_/_",
+    power: "_",
+    timeStamp: "0001-01-01T00:00:00",
+  },
+  {
+    id: 3,
+    deviceName: "Kylpyhuone",
+    info: "/",
+    client: "Jari Siikavirta",
+    deviceType: "FLOOR/_/_",
+    power: "_",
+    timeStamp: "0001-01-01T00:00:00",
+  },
+  {
+    id: 4,
+    deviceName: "Kylpyhuone",
+    info: "/",
+    client: "Jari Siikavirta",
+    deviceType: "FLOOR/_/_",
+    power: "_",
+    timeStamp: "0001-01-01T00:00:00",
+  },
+  {
+    id: 5,
+    deviceName: "Kylpyhuone",
+    info: "/",
+    client: "Jari Siikavirta",
+    deviceType: "FLOOR/_/_",
+    power: "_",
+    timeStamp: "0001-01-01T00:00:00",
+  },
+];
 
-  useEffect(() => {
-    const el = ref.current.parentNode.firstChild;
-    const varColor = window
-      .getComputedStyle(el)
-      .getPropertyValue("background-color");
-    setColor(varColor);
-  }, [ref]);
+export default function DevicesList() {
+  const [rows, setRows] = useState(initialRows);
+
+  const handleDelete = (id) => {
+    setRows(rows.filter((row) => row.id !== id));
+  };
+
+  const handleEdit = (id) => {
+    // Add your edit logic here
+    console.log(`Edit row with id: ${id}`);
+  };
+
+  const columns = [
+    { field: "id", headerName: "ID", width: 90 },
+    {
+      field: "deviceName",
+      headerName: "Device name",
+      width: 160,
+      editable: false,
+    },
+    {
+      field: "info",
+      headerName: "Info",
+      width: 140,
+      editable: false,
+    },
+    {
+      field: "client",
+      headerName: "Client",
+      width: 160,
+      editable: false,
+    },
+    {
+      field: "deviceType",
+      headerName: "Device type",
+      description: "This column has a value getter and is not sortable.",
+      sortable: false,
+      width: 160,
+    },
+    {
+      field: "power",
+      headerName: "Power",
+      width: 110,
+      editable: false,
+    },
+    {
+      field: "timeStamp",
+      headerName: "Timestamp (UTC)",
+      type: "timeStamp",
+      width: 160,
+      editable: false,
+    },
+    {
+      width: 150,
+      renderCell: (params) => (
+        <CContainer className="px-4" lg>
+          <EditIcon
+            onClick={() => handleEdit(params.id)}
+            style={{
+              cursor: "pointer",
+              color: "green",
+              marginLeft: "20px",
+              marginRight: "8px",
+            }}
+          />
+          <DeleteIcon
+            onClick={() => handleDelete(params.id)}
+            style={{
+              cursor: "pointer",
+              color: "red",
+            }}
+          />
+        </CContainer>
+      ),
+    },
+  ];
 
   return (
-    <table className="table w-100" ref={ref}>
-      <tbody>
-        <tr>
-          <td className="text-body-secondary">HEX:</td>
-          <td className="font-weight-bold">{rgbToHex(color)}</td>
-        </tr>
-        <tr>
-          <td className="text-body-secondary">RGB:</td>
-          <td className="font-weight-bold">{color}</td>
-        </tr>
-      </tbody>
-    </table>
+    <CContainer className="px-4" lg>
+      <Suspense fallback={<CSpinner color="primary" />}></Suspense>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 10,
+            },
+          },
+        }}
+        pageSizeOptions={[5]}
+        checkboxSelection
+        disableRowSelectionOnClick
+      />
+      <Suspense />
+    </CContainer>
   );
 }
-
-function ThemeColor({ className, children }) {
-  const classes = classNames(className, "theme-color w-75 rounded mb-3");
-  return (
-    <CCol xs={12} sm={6} md={4} xl={2} className="mb-4">
-      <div className={classes} style={{ paddingTop: "75%" }}></div>
-      {children}
-      <ThemeView />
-    </CCol>
-  );
-}
-
-ThemeColor.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-};
-
-function Colors() {
-  return (
-    <>
-      <CCard className="mb-4">
-        <CCardHeader>Theme colors</CCardHeader>
-        <CCardBody>
-          <CRow>
-            <ThemeColor className="bg-primary">
-              <h6>Brand Primary Color</h6>
-            </ThemeColor>
-            <ThemeColor className="bg-secondary">
-              <h6>Brand Secondary Color</h6>
-            </ThemeColor>
-            <ThemeColor className="bg-success">
-              <h6>Brand Success Color</h6>
-            </ThemeColor>
-            <ThemeColor className="bg-danger">
-              <h6>Brand Danger Color</h6>
-            </ThemeColor>
-            <ThemeColor className="bg-warning">
-              <h6>Brand Warning Color</h6>
-            </ThemeColor>
-            <ThemeColor className="bg-info">
-              <h6>Brand Info Color</h6>
-            </ThemeColor>
-            <ThemeColor className="bg-light">
-              <h6>Brand Light Color</h6>
-            </ThemeColor>
-            <ThemeColor className="bg-dark">
-              <h6>Brand Dark Color</h6>
-            </ThemeColor>
-          </CRow>
-        </CCardBody>
-      </CCard>
-    </>
-  );
-}
-
-export default Colors;
